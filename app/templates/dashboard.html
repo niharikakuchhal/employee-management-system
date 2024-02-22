@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <div class="form-box">
+        <h2>Work Experience</h2>
+        <form id="experienceForm" action="{{ url_for('save_experience') }}" method="POST">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Sl.No.</th>
+                        <th>Company Name</th>
+                        <th>Role</th>
+                        <th>Date of Joining</th>
+                        <th>Last Date</th>
+                        <th>Action</th> <!-- For the Remove button -->
+                    </tr>
+                </thead>
+                <tbody id="experienceSection">
+                    <!-- JavaScript will dynamically add rows here -->
+                    {% for experience in experiences %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ experience.company_name }}</td>
+                            <td>{{ experience.role }}</td>
+                            <td>{{ experience.date_of_joining }}</td>
+                            <td>{{ experience.last_date }}</td>
+                            <td><button class="removeRow" data-id="{{ experience.id }}">×</button></td>
+                        </tr>
+                        {% else %}
+                        <tr>
+                            <td colspan="6">No work experience added yet.</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <div class="form-actions">
+                <button type="button" class="btn addMoreBtn">+ Add More</button>
+                <button type="submit" class="saveBtn btn">Save</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
